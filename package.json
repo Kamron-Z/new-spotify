@@ -1,0 +1,29 @@
+{
+  "name": "pre-diploma",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
+    "sass": "^1.43.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/shakhabdumalikovich/group-502.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/shakhabdumalikovich/group-502/issues"
+  },
+  "homepage": "https://gitlab.com/shakhabdumalikovich/group-502#readme"
+}
