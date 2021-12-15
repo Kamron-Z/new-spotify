@@ -1,4 +1,4 @@
-export let playlists = [{
+let playlists = [{
    title: 'lisa',
    music: []
 }, {
@@ -6,7 +6,7 @@ export let playlists = [{
    music: []
 }]
 
-export let music = [
+let music = [
    // {
    //     title: String,
    //     author: String,
@@ -141,3 +141,29 @@ export let music = [
       isLiked: false,
    },
 ]
+
+music.map(item => {
+   return item._id = music.indexOf(item)
+   return item
+})
+
+for (let item of music) {
+   let audio = document.createElement('audio')
+
+   audio.src = `./static/audio/${item.title_org}.mp3`
+
+   audio.addEventListener("loadeddata", function () {
+      // audio.duration ? console.log(audio.duration) : console.log('NO FILE!')
+      let minut = Math.floor(audio.duration / 60)
+      let sec = Math.floor(audio.duration % 60)
+      if (sec < 10) {
+         sec = `0${sec}`;
+      }
+      item.times = `${minut}:${sec}`
+   });
+}
+
+export {
+   music,
+   playlists
+}

@@ -1,0 +1,41 @@
+.modal-menu {
+   display: none;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   z-index: 300;
+   border-radius: 8px;
+   background: #fff;
+   padding: 15px;
+
+   &.active {
+      display: block;
+   }
+
+   & div {
+      border-bottom: 1px solid #8E9AA7;
+      cursor: pointer;
+      transition: .3s all;
+      padding: 7px;
+
+      &:hover {
+         background: #8E9AA7;
+      }
+
+      &:last-child {
+         border: none;
+      }
+   }
+}
+
+.menu-item {
+   font-size: 14px;
+   color: #191C21;
+   text-transform: uppercase;
+
+   &.like {}
+
+   &.add {}
+
+   &.lister {}
+}
