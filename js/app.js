@@ -5,6 +5,7 @@ import {
 
 let reloadRandom = document.querySelector('.reloadRandom')
 let reloadLiked = document.querySelector('.reloadLiked')
+let reloadLast = document.querySelector('.reloadLast')
 let modalMenu = document.querySelector('.modal-menu')
 let likedBox = document.querySelector('.likedBox')
 let like = document.querySelector('.like')
@@ -16,7 +17,7 @@ let musicIndex = music[indexPlayer]
 
 // arr for liked and last
 let likedArr;
-let lastArr;
+let lastArr = []
 
 likedArr = (music.filter(item => item.isLiked == true))
 
@@ -39,6 +40,7 @@ const btnLove = (elemId) => {
    reloadRandomFunc(music)
    reloadLikedFunc(likedArr)
    asideReloadFunc(likedArr)
+   reloadLastFunc(lastArr)
 }
 
 const btnMenu = (elemId, e) => {
@@ -63,30 +65,65 @@ const btnMenu = (elemId, e) => {
       reloadRandomFunc(music)
       reloadLikedFunc(likedArr)
       asideReloadFunc(likedArr)
+      reloadLastFunc(lastArr)
    }
 }
 
 const imgRandomPlay = (elemId) => {
+   let find = music.filter(item => item._id == elemId)[0]
    indexPlayer = elemId
    musicIndex = music[indexPlayer]
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
    player_userAuthor.innerText = musicIndex.author
    next.classList.remove('active')
+   prew.classList.remove('active')
    nextLiked.classList.remove('active')
    prewLiked.classList.remove('active')
+   prewLast.classList.remove('active')
+   nextLast.classList.remove('active')
    playFunc()
+   lastArr.unshift(find)
+   lastArr = lastArr.filter((item, pos) => {
+      return lastArr.indexOf(item) == pos
+   })
+   reloadLastFunc(lastArr)
 }
 
-const imgLikedPlay = (elemId) => {
+const imgLikedPlay = (elemId, idElem) => {
+   let find = music.filter(item => item._id == idElem)[0]
    indexPlayer = elemId
    musicIndex = likedArr[indexPlayer]
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
    player_userAuthor.innerText = musicIndex.author
    next.classList.add('active')
+   prew.classList.add('active')
    nextLiked.classList.add('active')
    prewLiked.classList.add('active')
+   prewLast.classList.remove('active')
+   nextLast.classList.remove('active')
+   playFunc()
+   lastArr.unshift(find)
+   lastArr = lastArr.filter((item, pos) => {
+      return lastArr.indexOf(item) == pos
+   })
+   reloadLastFunc(lastArr)
+}
+
+const imgLastPlay = (elemId, idElem) => {
+   let find = music.filter(item => item._id == idElem)[0]
+   indexPlayer = elemId
+   musicIndex = lastArr[indexPlayer]
+   audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
+   player_userName.innerText = musicIndex.title
+   player_userAuthor.innerText = musicIndex.author
+   next.classList.add('active')
+   prew.classList.add('active')
+   nextLiked.classList.remove('active')
+   prewLiked.classList.remove('active')
+   prewLast.classList.add('active')
+   nextLast.classList.add('active')
    playFunc()
 }
 
@@ -197,11 +234,68 @@ const reloadLikedFunc = (arr) => {
             btnMenu(item._id, event)
          }
          img.onclick = () => {
-            imgLikedPlay(arr.indexOf(item))
+            imgLikedPlay(arr.indexOf(item), item._id)
          }
       }
    } else {
       audioSrc.src = `#`
+   }
+}
+
+const reloadLastFunc = (arr) => {
+   reloadLast.innerHTML = ''
+   if (arr.length > 0) {
+      for (const item of arr) {
+         let main_item = document.createElement('div')
+         let number = document.createElement('p')
+         let img = document.createElement('img')
+         let user = document.createElement('div')
+         let name = document.createElement('p')
+         let author = document.createElement('p')
+         let love = document.createElement('div')
+         let love_img = document.createElement('img')
+         let time = document.createElement('div')
+         let menu = document.createElement('div')
+         let menu_img = document.createElement('img')
+
+         main_item.classList.add('main_item')
+         number.classList.add('number')
+         img.classList.add('img')
+         user.classList.add('user')
+         name.classList.add('name')
+         author.classList.add('author')
+         love.classList.add('love')
+         time.classList.add('time')
+         menu.classList.add('menu')
+
+         number.innerText = arr.indexOf(item) + 1
+         img.src = `./static/picture/${item.img}.jpg`
+         name.innerText = item.title
+         author.innerText = item.author
+         time.innerText = item.times
+         menu_img.src = `./static/Icons/menu.svg`
+
+         // if else 
+         item.isLiked ? love_img.src = `./static/Icons/love-blue.svg` : love_img.src = `./static/Icons/love-white.svg`
+
+         menu.append(menu_img)
+         love.append(love_img)
+         user.append(name, author)
+         main_item.append(number, img, user, love, time, menu)
+         reloadLast.append(main_item)
+         // onclick
+         love_img.onclick = () => {
+            btnLove(item._id)
+         }
+         menu_img.onclick = (event) => {
+            btnMenu(item._id, event)
+         }
+         img.onclick = () => {
+            imgLastPlay(arr.indexOf(item), item._id)
+         }
+      }
+   } else {
+      // audioSrc.src = `#`
    }
 }
 
@@ -230,6 +324,7 @@ window.addEventListener("load", function (event) {
    this.setTimeout(() => {
       reloadRandomFunc(music)
       reloadLikedFunc(likedArr)
+      reloadLastFunc(lastArr)
       asideReloadFunc(likedArr)
    }, 200)
 });
@@ -317,6 +412,9 @@ let next = document.querySelector('.next')
 let prew = document.querySelector('.prew')
 let nextLiked = document.querySelector('.nextLiked')
 let prewLiked = document.querySelector('.prewLiked')
+let prewLast = document.querySelector('.prewLast')
+let nextLast = document.querySelector('.nextLast')
+
 // progress
 let progress = document.querySelector('.progress')
 let timesong = document.querySelector('.timesong')
@@ -343,6 +441,8 @@ next.onclick = () => nextFunc()
 prew.onclick = () => prewFunc()
 nextLiked.onclick = () => nextLikedFunc()
 prewLiked.onclick = () => prewLikedFunc()
+prewLast.onclick = () => prewLastFunc()
+nextLast.onclick = () => nextLastFunc()
 
 const playFunc = () => {
    audioSrc.play()
@@ -375,6 +475,15 @@ const nextLikedFunc = () => {
    playFunc()
 }
 
+const nextLastFunc = () => {
+   indexPlayer >= lastArr.length - 1 ? indexPlayer = 0 : indexPlayer++
+   musicIndex = lastArr[indexPlayer]
+   audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
+   player_userName.innerText = musicIndex.title
+   player_userAuthor.innerText = musicIndex.author
+   playFunc()
+}
+
 const prewFunc = () => {
    indexPlayer <= 0 ? indexPlayer = music.length - 1 : indexPlayer--
    let musicIndex = music[indexPlayer]
@@ -385,8 +494,17 @@ const prewFunc = () => {
 }
 
 const prewLikedFunc = () => {
-   indexPlayer <= 0 ? indexPlayer = music.length - 1 : indexPlayer--
+   indexPlayer <= 0 ? indexPlayer = likedArr.length - 1 : indexPlayer--
    let musicIndex = likedArr[indexPlayer]
+   audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
+   player_userName.innerText = musicIndex.title
+   player_userAuthor.innerText = musicIndex.author
+   playFunc()
+}
+
+const prewLastFunc = () => {
+   indexPlayer <= 0 ? indexPlayer = lastArr.length - 1 : indexPlayer--
+   let musicIndex = lastArr[indexPlayer]
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
    player_userAuthor.innerText = musicIndex.author

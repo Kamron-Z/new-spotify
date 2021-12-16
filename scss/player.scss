@@ -170,6 +170,22 @@
          }
       }
 
+      & .prewLast {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .nextLast {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
       & .player_user {
          display: block;
          width: 100%;
@@ -201,6 +217,22 @@
 }
 
 .prewLiked {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.prewLast {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.nextLast {
    display: none;
 
    &.active {
