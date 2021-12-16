@@ -65,7 +65,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+   }
 
+   .next {
+      &.active {
+         display: none;
+      }
+   }
+
+   .prew {
+      &.active {
+         display: none;
+      }
    }
 }
 
@@ -73,19 +84,17 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   max-width: 500px;
+   max-width: 600px;
    width: 100%;
    margin: 0 auto;
    margin-top: 20px;
-
 }
 
 .progress-container {
-   width: 100%;
+   width: 500px;
    height: 10px;
    border: 1px solid #8E9AA7;
    border-radius: 8px;
-   margin: 0 10px;
    display: flex;
    align-items: center;
    cursor: pointer;
@@ -111,17 +120,20 @@
       cursor: default;
    }
 
-   .audio_menu {
-      width: 30px;
-      height: 30px;
-      margin: 0 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+   .play-btn {
 
-      img {
-         transform: rotate(90deg);
+      & .audio_menu {
+         width: 30px;
+         height: 30px;
+         margin: 0 10px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+
+         img {
+            transform: rotate(90deg);
+         }
       }
    }
 
@@ -142,9 +154,56 @@
          display: none;
       }
 
+      & .nextLiked {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .prewLiked {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
       & .player_user {
          display: block;
          width: 100%;
       }
+   }
+}
+
+
+.played {
+   font-size: 16px;
+   color: #fff;
+   width: 100px;
+   text-align: start;
+}
+
+.timesong {
+   font-size: 16px;
+   color: #fff;
+   width: 100px;
+   text-align: end;
+}
+
+.nextLiked {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.prewLiked {
+   display: none;
+
+   &.active {
+      display: block;
    }
 }

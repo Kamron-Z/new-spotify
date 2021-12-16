@@ -9,7 +9,7 @@
 <body>
    <div class="mask"></div>
    <div class="modal-menu">
-      <div class="menu-item like">like</div>
+      <div class="menu-item like"></div>
       <div class="menu-item add">add to playlist</div>
       <div class="menu-item lister">listen now</div>
    </div>
@@ -19,6 +19,7 @@
          <p class="author">Starboy</p>
       </div>
       <div class="audio">
+         <audio id="audioSrc" src="#"></audio>
          <div class="audio-rigth">
             <div class="play-btn">
                <div class="player_user">
@@ -34,10 +35,16 @@
                <div class="prew">
                   <img src="./static/Icons/track-next.svg">
                </div>
+               <div class="prewLiked">
+                  <img src="./static/Icons/track-next.svg">
+               </div>
                <div class="play">
                   <img class="play_src" src="./static/Icons/play.svg">
                </div>
                <div class="next">
+                  <img src="./static/Icons/track-prev.svg">
+               </div>
+               <div class="nextLiked">
                   <img src="./static/Icons/track-prev.svg">
                </div>
                <div class="any">
@@ -46,11 +53,11 @@
 
             </div>
             <div class="play-bar">
-               <span class="played">0</span>
+               <div class="played">0</div>
                <div class="progress-container">
                   <div class="progress"></div>
                </div>
-               <span class="timesong">0</span>
+               <div class="timesong">0</div>
             </div>
          </div>
       </div>
@@ -90,10 +97,10 @@
                <!-- nav 3 -->
                <div class="aside_nav">
                   <div class="title">liked songs</div>
-                  <div class="links">
+                  <div class="links likedBox">
                      <div>
-                        <span>STAY</span>
-                        <span>3:53</span>
+                        <span>Name</span>
+                        <span>0:00</span>
                      </div>
                   </div>
                   <!-- /nav 3 -->
@@ -108,15 +115,6 @@
                   <img src="./static/Icons/search.svg">
                   <input id="search" type="text" placeholder="Search by name and artist">
                   <div class="search_box">
-                     <div class="box_item">
-                        <div class="content">
-                           <p class="name">STAY</p>
-                           <p class="author">dul lipa</p>
-                        </div>
-                        <div class="time">
-                           <p>3:00</p>
-                        </div>
-                     </div>
                   </div>
                </div>
                <div class="header_user">
@@ -196,21 +194,7 @@
                   <div class="random">
                      <div class="title">10 random songs</div>
                      <div class="main_content reloadRandom">
-                        <div class="main_item">
-                           <p class="number">100</p>
-                           <img class="img" src="./static/picture/badGuy.jpg">
-                           <div class="user">
-                              <p class="name">STAY</p>
-                              <p class="author">Justin Bieber</p>
-                           </div>
-                           <div class="love">
-                              <img src="./static/Icons/love.svg">
-                           </div>
-                           <div class="time">3:20</div>
-                           <div class="menu">
-                              <img src="./static/Icons/menu.svg">
-                           </div>
-                        </div>
+
                      </div>
                   </div>
                   <!-- /random -->
@@ -218,21 +202,6 @@
                   <div class="liked">
                      <div class="title">liked tracks</div>
                      <div class="main_content reloadLiked">
-                        <div class="main_item">
-                           <p class="number">100</p>
-                           <img class="img" src="./static/picture/badGuy.jpg">
-                           <div class="user">
-                              <p class="name">STAY</p>
-                              <p class="author">Justin Bieber</p>
-                           </div>
-                           <div class="love">
-                              <img src="./static/Icons/love.svg">
-                           </div>
-                           <div class="time">3:20</div>
-                           <div class="menu">
-                              <img src="./static/Icons/menu.svg">
-                           </div>
-                        </div>
                      </div>
                   </div>
                   <!-- /liked -->
