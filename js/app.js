@@ -481,7 +481,7 @@ setTimeout(() => {
    asideReloadFunc(likedArr)
    modalAddFunc(playlists)
    addListFunc(playlists)
-}, 200)
+}, 500)
 
 // search 
 let searchArr = []
