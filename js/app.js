@@ -474,16 +474,14 @@ modalBtn.onclick = () => {
 }
 
 
-window.addEventListener("load", function (event) {
-   this.setTimeout(() => {
-      reloadRandomFunc(music)
-      reloadLikedFunc(likedArr)
-      reloadLastFunc(lastArr)
-      asideReloadFunc(likedArr)
-      modalAddFunc(playlists)
-      addListFunc(playlists)
-   }, 200)
-});
+setTimeout(() => {
+   reloadRandomFunc(music)
+   reloadLikedFunc(likedArr)
+   reloadLastFunc(lastArr)
+   asideReloadFunc(likedArr)
+   modalAddFunc(playlists)
+   addListFunc(playlists)
+}, 200)
 
 // search 
 let searchArr = []
