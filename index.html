@@ -8,6 +8,14 @@
 
 <body>
    <div class="mask"></div>
+   <div class="modal-add">
+      <img class="cancel" src="./static/Icons/close.svg">
+      <div class="title">Add to playlist</div>
+      <div class="modal-add-box">
+      </div>
+      <input type="text" class="input-modal" placeholder="Name of playlist">
+      <button class="modal-btn">Save</button>
+   </div>
    <div class="modal-menu">
       <div class="menu-item like"></div>
       <div class="menu-item add">add to playlist</div>
@@ -26,7 +34,7 @@
                   <p class="name">The Weeknd</p>
                   <p class="author">Starboy</p>
                </div>
-               <div class="audio_menu">
+               <div class="audio_menu modal-player-menu">
                   <img src="./static/Icons/menu.svg">
                </div>
                <div class="replay">
@@ -59,11 +67,11 @@
 
             </div>
             <div class="play-bar">
-               <div class="played">0</div>
+               <div class="played">0:00min</div>
                <div class="progress-container">
                   <div class="progress"></div>
                </div>
-               <div class="timesong">0</div>
+               <div class="timesong">0:00min</div>
             </div>
          </div>
       </div>
@@ -79,10 +87,10 @@
             <div class="aside_nav">
                <div class="title">Navigation</div>
                <div class="links">
-                  <div class="active">
+                  <div id="homepage">
                      <span>Homepage</span>
                   </div>
-                  <div>
+                  <div id="playlist">
                      <span>Playlists</span>
                   </div>
                   <div>
@@ -94,7 +102,7 @@
             <!-- nav 2 -->
             <div class="aside_nav">
                <div class="title">playlists</div>
-               <div class="links">
+               <div class="links add-list">
                   <div>
                      <span>Liked songs</span>
                   </div>
@@ -213,37 +221,13 @@
                   <div class="last">
                      <div class="title">recently listened</div>
                      <div class="main_content reloadLast">
-                        <div class="main_item">
-                           <p class="number">100</p>
-                           <img class="img" src="./static/picture/badGuy.jpg">
-                           <div class="user">
-                              <p class="name">STAY</p>
-                              <p class="author">Justin Bieber</p>
-                           </div>
-                           <div class="love">
-                              <img src="./static/Icons/love.svg">
-                           </div>
-                           <div class="time">3:20</div>
-                           <div class="menu">
-                              <img src="./static/Icons/menu.svg">
-                           </div>
-                        </div>
-                        <div class="main_item">
-                           <p class="number">100</p>
-                           <img class="img" src="./static/picture/badGuy.jpg">
-                           <div class="user">
-                              <p class="name">STAY</p>
-                              <p class="author">Justin Bieber</p>
-                           </div>
-                           <div class="love">
-                              <img src="./static/Icons/love.svg">
-                           </div>
-                           <div class="time">3:20</div>
-                           <div class="menu">
-                              <img src="./static/Icons/menu.svg">
-                           </div>
-                        </div>
                      </div>
+                  </div>
+               </div>
+               <div class="main_homepage main_playlist">
+                  <div class="last">
+                     <div class="title"></div>
+                     <div class="main_content reloadPlaylist"></div>
                   </div>
                </div>
             </div>

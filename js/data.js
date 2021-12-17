@@ -1,9 +1,49 @@
 let playlists = [{
    title: 'lisa',
-   music: []
+   music: [{
+         title: 'Toxic',
+         author: 'BoyWithUke',
+         title_org: 'Toxic',
+         img: 'toxic',
+
+         length: Number,
+         isLiked: false,
+         times: `2:48`,
+         _id: 7
+      },
+      {
+         title: 'MONEY',
+         author: 'LISA',
+         title_org: 'MONEY',
+         img: 'money',
+
+         length: Number,
+         isLiked: false,
+         times: `2:48`,
+         _id: 8
+      },
+   ]
 }, {
    title: 'drake',
-   music: []
+   music: [{
+      title: 'lovely',
+      title_org: "lovely", //for audio in js
+      author: 'Khalid, Billie Eilish',
+      img: 'lovely',
+      times: `3:20`,
+      length: Number,
+      isLiked: false,
+      _id: 0
+   }, {
+      title: 'bad guy',
+      title_org: 'bad-guy',
+      author: 'BillieEilish',
+      img: 'badGuy',
+      times: `3:11`,
+      length: Number,
+      isLiked: false,
+      _id: 1
+   }]
 }]
 
 let music = [
@@ -143,7 +183,12 @@ let music = [
 ]
 
 music.map(item => {
-   return item._id = music.indexOf(item)
+   item._id = music.indexOf(item)
+   return item
+})
+
+playlists.map(item => {
+   item._id = playlists.indexOf(item)
    return item
 })
 

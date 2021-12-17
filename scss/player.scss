@@ -3,7 +3,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-   z-index: 1000;
+   z-index: 200;
    width: 100%;
    background: #000;
    padding: 25px 40px;
@@ -22,7 +22,6 @@
          font-size: 14px;
          color: #8E9AA7;
       }
-
    }
 }
 
@@ -119,6 +118,8 @@
       width: 100%;
       cursor: default;
    }
+
+   
 
    .play-btn {
 

@@ -11,6 +11,10 @@
       padding: 50px;
       margin-top: 50px;
 
+      &.active {
+         display: none;
+      }
+
       & .title {
          font-size: 16px;
          color: #8E9AA7;
@@ -129,6 +133,22 @@
    }
 }
 
+.main_playlist {
+   width: 100%;
+   max-width: 100%;
+   display: none;
+   grid-gap: 15px;
+   justify-content: center;
+   background: #191C21;
+   padding: 50px;
+   margin-top: 50px;
+
+   &.active {
+      display: flex;
+      flex-wrap: wrap;
+   }
+}
+
 @media (max-width: 1200px) {
    .main_homepage {
       padding: 20px;
@@ -147,6 +167,7 @@
          width: 100%;
       }
    }
+
 }
 
 
@@ -166,8 +187,6 @@
          text-align: center;
       }
    }
-
-
 
    .main_content {
       width: 50%;
@@ -223,3 +242,5 @@
       }
    }
 }
+
+// main_playlist

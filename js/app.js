@@ -3,6 +3,7 @@ import {
    music
 } from './data.js'
 
+let body = document.body
 let reloadRandom = document.querySelector('.reloadRandom')
 let reloadLiked = document.querySelector('.reloadLiked')
 let reloadLast = document.querySelector('.reloadLast')
@@ -11,7 +12,10 @@ let likedBox = document.querySelector('.likedBox')
 let like = document.querySelector('.like')
 let add = document.querySelector('.add')
 let lister = document.querySelector('.lister')
+let modalAdd = document.querySelector('.modal-add')
+let cancel = document.querySelector('.cancel')
 let mask = document.querySelector('.mask')
+let audio_menu = document.querySelector('.audio_menu')
 let indexPlayer = 0
 let musicIndex = music[indexPlayer]
 
@@ -25,6 +29,15 @@ likedArr = (music.filter(item => item.isLiked == true))
 mask.onclick = () => {
    mask.classList.remove('active')
    modalMenu.classList.remove('active')
+   modalAdd.classList.remove('active')
+   body.classList.remove('body-hidden')
+}
+
+cancel.onclick = () => {
+   mask.classList.remove('active')
+   modalMenu.classList.remove('active')
+   modalAdd.classList.remove('active')
+   body.classList.remove('body-hidden')
 }
 
 // onclikc love
@@ -37,21 +50,27 @@ const btnLove = (elemId) => {
       let likedFind = likedArr.filter(item => item._id != find._id)
       likedArr = likedFind
    }
-   reloadRandomFunc(music)
-   reloadLikedFunc(likedArr)
-   asideReloadFunc(likedArr)
-   reloadLastFunc(lastArr)
+
+   if (main_playlist.classList.contains('active')) {
+      reloadPlalistFunc(playlists)
+      asideReloadFunc(likedArr)
+   } else {
+      reloadRandomFunc(music)
+      reloadLikedFunc(likedArr)
+      reloadLastFunc(lastArr)
+      asideReloadFunc(likedArr)
+   }
 }
 
 const btnMenu = (elemId, e) => {
    modalMenu.classList.add('active')
    mask.classList.add('active')
-   modalMenu.style.top = `${e.pageY}px`
-   modalMenu.style.left = `${e.pageX}px`
+   modalMenu.style.top = `${e.pageY - 120}px`
+   modalMenu.style.left = `${e.pageX - 150}px`
    let find = music.filter(item => item._id == elemId)[0]
 
    find.isLiked ? like.innerText = 'dislike' : like.innerText = 'like'
-
+   body.classList.add('body-hidden')
    like.onclick = () => {
       find.isLiked = !find.isLiked
       if (find.isLiked == true) {
@@ -62,9 +81,27 @@ const btnMenu = (elemId, e) => {
       }
       modalMenu.classList.remove('active')
       mask.classList.remove('active')
+      body.classList.remove('body-hidden')
       reloadRandomFunc(music)
       reloadLikedFunc(likedArr)
       asideReloadFunc(likedArr)
+      reloadLastFunc(lastArr)
+      reloadPlalistFunc(playlists)
+   }
+   add.onclick = () => {
+      modalAdd.classList.add('active')
+      mask.classList.add('active')
+   }
+   lister.onclick = () => {
+      let find = music.filter(item => item._id == elemId)[0]
+      audioSrc.src = `./static/audio/${find.title_org}.mp3`
+      player_userName.innerText = find.title
+      player_userAuthor.innerText = find.author
+      playFunc()
+      lastArr.unshift(find)
+      lastArr = lastArr.filter((item, pos) => {
+         return lastArr.indexOf(item) == pos
+      })
       reloadLastFunc(lastArr)
    }
 }
@@ -73,6 +110,7 @@ const imgRandomPlay = (elemId) => {
    let find = music.filter(item => item._id == elemId)[0]
    indexPlayer = elemId
    musicIndex = music[indexPlayer]
+   audioSrc.id = find._id
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
    player_userAuthor.innerText = musicIndex.author
@@ -93,6 +131,7 @@ const imgRandomPlay = (elemId) => {
 const imgLikedPlay = (elemId, idElem) => {
    let find = music.filter(item => item._id == idElem)[0]
    indexPlayer = elemId
+   audioSrc.id = find._id
    musicIndex = likedArr[indexPlayer]
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
@@ -114,6 +153,7 @@ const imgLikedPlay = (elemId, idElem) => {
 const imgLastPlay = (elemId, idElem) => {
    let find = music.filter(item => item._id == idElem)[0]
    indexPlayer = elemId
+   audioSrc.id = find._id
    musicIndex = lastArr[indexPlayer]
    audioSrc.src = `./static/audio/${musicIndex.title_org}.mp3`
    player_userName.innerText = musicIndex.title
@@ -125,6 +165,58 @@ const imgLastPlay = (elemId, idElem) => {
    prewLast.classList.add('active')
    nextLast.classList.add('active')
    playFunc()
+}
+
+const imgPlaylistPlay = (elemId, idElem) => {
+   let find = music.filter(item => item._id == idElem)[0]
+   audioSrc.id = find._id
+   audioSrc.src = `./static/audio/${find.title_org}.mp3`
+   player_userName.innerText = find.title
+   player_userAuthor.innerText = find.author
+   playFunc()
+}
+
+const audioMenu = () => {
+   audio_menu.onclick = (e) => {
+      let find = music.filter(item => item._id == audioSrc.id)[0]
+      modalMenu.classList.add('active')
+      mask.classList.add('active')
+      modalMenu.style.top = `${e.pageY - 120}px`
+      modalMenu.style.left = `${e.pageX - 150}px`
+      find.isLiked ? like.innerText = 'dislike' : like.innerText = 'like'
+      body.classList.add('body-hidden')
+      like.onclick = () => {
+         find.isLiked = !find.isLiked
+         if (find.isLiked == true) {
+            likedArr.push(find)
+         } else {
+            let likedFind = likedArr.filter(item => item._id != find._id)
+            likedArr = likedFind
+         }
+         modalMenu.classList.remove('active')
+         mask.classList.remove('active')
+         body.classList.remove('body-hidden')
+         reloadRandomFunc(music)
+         reloadLikedFunc(likedArr)
+         asideReloadFunc(likedArr)
+         reloadLastFunc(lastArr)
+      }
+      add.onclick = () => {
+         modalAdd.classList.add('active')
+         mask.classList.add('active')
+      }
+      lister.onclick = () => {
+         audioSrc.src = `./static/audio/${find.title_org}.mp3`
+         player_userName.innerText = find.title
+         player_userAuthor.innerText = find.author
+         playFunc()
+         lastArr.unshift(find)
+         lastArr = lastArr.filter((item, pos) => {
+            return lastArr.indexOf(item) == pos
+         })
+         reloadLastFunc(lastArr)
+      }
+   }
 }
 
 // reload
@@ -155,6 +247,7 @@ const reloadRandomFunc = (arr) => {
          time.classList.add('time')
          menu.classList.add('menu')
 
+         img.id = item._id
          number.innerText = arr.indexOf(item) + 1
          img.src = `./static/picture/${item.img}.jpg`
          name.innerText = item.title
@@ -170,6 +263,7 @@ const reloadRandomFunc = (arr) => {
          user.append(name, author)
          main_item.append(number, img, user, love, time, menu)
          reloadRandom.append(main_item)
+
          // onclick 
          love_img.onclick = () => {
             btnLove(item._id)
@@ -179,10 +273,13 @@ const reloadRandomFunc = (arr) => {
          }
          img.onclick = () => {
             imgRandomPlay(arr.indexOf(item))
+
          }
       }
    }
 }
+
+audioMenu()
 
 const reloadLikedFunc = (arr) => {
    reloadLiked.innerHTML = ''
@@ -300,6 +397,8 @@ const reloadLastFunc = (arr) => {
 }
 
 // aside reload 
+let addList = document.querySelector('.add-list')
+
 const asideReloadFunc = (arr) => {
    likedBox.innerHTML = ''
 
@@ -319,6 +418,61 @@ const asideReloadFunc = (arr) => {
       }
    }
 }
+const addListFunc = (arr) => {
+   addList.innerText = ''
+
+   for (const item of arr) {
+      let div = document.createElement('div')
+      let span = document.createElement('span')
+
+      span.innerText = item.title
+
+      div.append(span)
+      addList.append(div)
+
+      span.onclick = () => {
+         console.log(item._id);
+      }
+   }
+}
+
+let modalAddBox = document.querySelector('.modal-add-box')
+let inputModal = document.querySelector('.input-modal')
+let modalBtn = document.querySelector('.modal-btn')
+// modal add 
+const modalAddFunc = (arr) => {
+   modalAddBox.innerHTML = ''
+   for (const item of arr) {
+      let itemElem = document.createElement('div')
+      let name = document.createElement('p')
+      let songsLength = document.createElement('p')
+
+      itemElem.classList.add('item')
+      name.classList.add('name')
+      songsLength.classList.add('songsLength')
+
+      name.innerText = item.title
+      songsLength.innerText = item.music.length + ' songs'
+
+      itemElem.append(name, songsLength)
+      modalAddBox.append(itemElem)
+   }
+}
+
+modalBtn.onclick = () => {
+   if (inputModal.value.length >= 3) {
+      playlists.push({
+         title: inputModal.value,
+         music: [],
+         _id: playlists.length
+      })
+      inputModal.value = ''
+   }
+
+   addListFunc(playlists)
+   modalAddFunc(playlists)
+}
+
 
 window.addEventListener("load", function (event) {
    this.setTimeout(() => {
@@ -326,6 +480,8 @@ window.addEventListener("load", function (event) {
       reloadLikedFunc(likedArr)
       reloadLastFunc(lastArr)
       asideReloadFunc(likedArr)
+      modalAddFunc(playlists)
+      addListFunc(playlists)
    }, 200)
 });
 
@@ -399,6 +555,11 @@ const searchReload = (arr) => {
          audioSrc.play()
          play.classList.add('active')
          play.querySelector('.play_src').src = `./static/Icons/pause.svg`
+         lastArr.unshift(item)
+         lastArr = lastArr.filter((item, pos) => {
+            return lastArr.indexOf(item) == pos
+         })
+         reloadLastFunc(lastArr)
       }
    }
 }
@@ -533,4 +694,104 @@ const setProgress = (e) => {
 }
 
 progress_container.addEventListener('click', setProgress)
-audioSrc.addEventListener('ended', nextFunc)
+audioSrc.addEventListener('ended', () => {
+   let next_func = next.classList.contains('active')
+   let next_liked = nextLiked.classList.contains('active')
+   let next_last = nextLast.classList.contains('active')
+   if (next_func == false) {
+      nextFunc()
+   } else if (next_liked == true) {
+      nextLikedFunc()
+   } else if (next_last == true) {
+      nextLastFunc()
+   }
+})
+
+// playlist page
+let playlist = document.querySelector('#playlist')
+let homepage = document.querySelector('#homepage')
+let intro = document.querySelector('.intro')
+let main_homepage = document.querySelector('.main_homepage')
+let main_playlist = document.querySelector('.main_playlist')
+let reloadPlaylist = document.querySelector('.reloadPlaylist')
+
+homepage.onclick = () => {
+   main_homepage.classList.remove('active')
+   playlist.classList.remove('active')
+   intro.classList.remove('active')
+   main_playlist.classList.remove('active')
+}
+
+playlist.onclick = () => {
+   main_playlist.classList.add('active')
+   main_homepage.classList.add('active')
+   intro.classList.add('active')
+   reloadPlalistFunc(playlists)
+}
+
+const reloadPlalistFunc = (arr) => {
+   main_playlist.innerHTML = ''
+
+   for (const item of arr) {
+      let last = document.createElement('div')
+      let title = document.createElement('div')
+      let reloadPlaylist = document.createElement('div')
+
+      last.classList.add('random')
+      title.classList.add('title')
+      reloadPlaylist.classList.add('main_content', 'reloadPlaylist')
+
+      title.innerText = item.title
+
+      for (const item2 of item.music) {
+         let main_item = document.createElement('div')
+         let number = document.createElement('p')
+         let img = document.createElement('img')
+         let user = document.createElement('div')
+         let name = document.createElement('p')
+         let author = document.createElement('p')
+         let love = document.createElement('div')
+         let love_img = document.createElement('img')
+         let time = document.createElement('div')
+         let menu = document.createElement('div')
+         let menu_img = document.createElement('img')
+
+         main_item.classList.add('main_item')
+         number.classList.add('number')
+         img.classList.add('img')
+         user.classList.add('user')
+         name.classList.add('name')
+         author.classList.add('author')
+         love.classList.add('love')
+         time.classList.add('time')
+         menu.classList.add('menu')
+
+         img.id = item2._id
+         number.innerText = item.music.indexOf(item2) + 1
+         img.src = `./static/picture/${item2.img}.jpg`
+         name.innerText = item2.title
+         author.innerText = item2.author
+         time.innerText = item2.times
+         menu_img.src = `./static/Icons/menu.svg`
+         // if else 
+         item2.isLiked ? love_img.src = `./static/Icons/love-blue.svg` : love_img.src = `./static/Icons/love-white.svg`
+         menu.append(menu_img)
+         love.append(love_img)
+         user.append(name, author)
+         main_item.append(number, img, user, love, time, menu)
+         reloadPlaylist.append(main_item)
+         // onclick
+         love_img.onclick = () => {
+            btnLove(item2._id)
+         }
+         menu_img.onclick = (event) => {
+            btnMenu(item2._id, event)
+         }
+         img.onclick = () => {
+            imgPlaylistPlay(item.music.indexOf(item2), item2._id)
+         }
+      }
+      last.append(title, reloadPlaylist)
+      main_playlist.append(last)
+   }
+}
