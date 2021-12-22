@@ -1,49 +1,37 @@
 let playlists = [{
    title: 'lisa',
-   music: [{
-         title: 'Toxic',
-         author: 'BoyWithUke',
-         title_org: 'Toxic',
-         img: 'toxic',
+   music: [],
+}, ]
 
-         length: Number,
-         isLiked: false,
-         times: `2:48`,
-         _id: 7
-      },
-      {
-         title: 'MONEY',
-         author: 'LISA',
-         title_org: 'MONEY',
-         img: 'money',
+let carusel = [{
+   title: 'Младшая сестра',
+   author: 'дора',
+   title_org: 'МладшаяСестра',
+   img: 'doradura',
 
-         length: Number,
-         isLiked: false,
-         times: `2:48`,
-         _id: 8
-      },
-   ]
+   isLiked: false,
 }, {
-   title: 'drake',
-   music: [{
-      title: 'lovely',
-      title_org: "lovely", //for audio in js
-      author: 'Khalid, Billie Eilish',
-      img: 'lovely',
-      times: `3:20`,
-      length: Number,
-      isLiked: false,
-      _id: 0
-   }, {
-      title: 'bad guy',
-      title_org: 'bad-guy',
-      author: 'BillieEilish',
-      img: 'badGuy',
-      times: `3:11`,
-      length: Number,
-      isLiked: false,
-      _id: 1
-   }]
+   title: 'Втюрилась',
+   author: 'дора',
+   title_org: 'Втюрилась',
+   img: 'vturilas',
+
+   isLiked: false,
+}, {
+   title: 'MONEY',
+   author: 'LISA',
+   title_org: 'MONEY',
+   img: 'money',
+
+   isLiked: false,
+}, {
+   title: 'bad guy',
+   title_org: 'bad-guy',
+   author: 'BillieEilish',
+   img: 'badGuy',
+
+   length: Number,
+   isLiked: false,
 }]
 
 let music = [
@@ -192,7 +180,28 @@ playlists.map(item => {
    return item
 })
 
+carusel.map(item => {
+   item._id = carusel.indexOf(item)
+   return item
+})
+
 for (let item of music) {
+   let audio = document.createElement('audio')
+
+   audio.src = `./static/audio/${item.title_org}.mp3`
+
+   audio.addEventListener("loadeddata", function () {
+      // audio.duration ? console.log(audio.duration) : console.log('NO FILE!')
+      let minut = Math.floor(audio.duration / 60)
+      let sec = Math.floor(audio.duration % 60)
+      if (sec < 10) {
+         sec = `0${sec}`;
+      }
+      item.times = `${minut}:${sec}`
+   });
+}
+
+for (let item of carusel) {
    let audio = document.createElement('audio')
 
    audio.src = `./static/audio/${item.title_org}.mp3`
@@ -210,5 +219,6 @@ for (let item of music) {
 
 export {
    music,
-   playlists
+   playlists,
+   carusel
 }

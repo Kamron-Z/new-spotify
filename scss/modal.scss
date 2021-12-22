@@ -77,6 +77,13 @@
          justify-content: space-between;
          align-items: center;
          margin: 10px 0;
+         cursor: pointer;
+         padding: 5px;
+         transition: .3s all;
+
+         &:hover {
+            background: #32363D;
+         }
 
          & .name {
             font-size: 22px;
@@ -131,4 +138,12 @@
          margin-bottom: 25px;
       }
    }
+}
+
+.playlist-modal-btn {
+   padding: 5px;
+   border-radius: 8px;
+   font-size: 16px;
+   transition: .3s all;
+   text-transform: uppercase;
 }

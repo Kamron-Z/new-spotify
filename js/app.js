@@ -1,6 +1,7 @@
 import {
    playlists,
-   music
+   music,
+   carusel
 } from './data.js'
 
 let body = document.body
@@ -90,6 +91,7 @@ const btnMenu = (elemId, e) => {
    }
    add.onclick = () => {
       modalAdd.classList.add('active')
+      modalAdd.id = elemId
       mask.classList.add('active')
    }
    lister.onclick = () => {
@@ -273,7 +275,6 @@ const reloadRandomFunc = (arr) => {
          }
          img.onclick = () => {
             imgRandomPlay(arr.indexOf(item))
-
          }
       }
    }
@@ -414,7 +415,7 @@ const asideReloadFunc = (arr) => {
       likedBox.append(div)
 
       div.onclick = () => {
-         imgLikedPlay(arr.indexOf(item))
+         imgLikedPlay(arr.indexOf(item), item._id)
       }
    }
 }
@@ -431,12 +432,103 @@ const addListFunc = (arr) => {
       addList.append(div)
 
       span.onclick = () => {
-         console.log(item._id);
+         btnPlaylistHtml(item._id)
       }
    }
 }
 
+let main_inner = document.querySelector('.main_inner')
+let main_playlistHtml = document.createElement('div')
+main_playlistHtml.classList.add('main_playlistHtml')
+
+const btnPlaylistHtml = (elemId) => {
+   main_playlistHtml.innerHTML = ''
+
+   main_homepage.classList.add('active')
+   intro.classList.remove('active')
+   main_playlist.classList.remove('active')
+   menu_setting.classList.remove('active')
+   intro.classList.add('active')
+
+   main_playlistHtml.classList.add('main_homepage')
+   main_playlistHtml.style.display = 'block'
+   let playlist = document.createElement('div')
+   if (main_playlistHtml.classList.contains('main_playlistHtml')) {
+      playlist.classList.add('playlist_add')
+      playlist.style.width = `50%`
+      playlist.classList.add('active')
+      playlist.innerHTML = ''
+      let find = playlists.filter(item => item._id == elemId)
+      document.title = find[0].title
+      for (const item of find) {
+         let title = document.createElement('div')
+         let reloadPlaylist = document.createElement('div')
+         title.classList.add('title')
+         reloadPlaylist.classList.add('main_content', 'reloadPlaylist')
+         title.innerText = item.title
+
+         if (item.music.length > 0) {
+            for (const item2 of item.music) {
+               let main_item = document.createElement('div')
+               let number = document.createElement('p')
+               let img = document.createElement('img')
+               let user = document.createElement('div')
+               let name = document.createElement('p')
+               let author = document.createElement('p')
+               let love = document.createElement('div')
+               let love_img = document.createElement('img')
+               let time = document.createElement('div')
+               let menu = document.createElement('div')
+               let menu_img = document.createElement('img')
+
+               main_item.classList.add('main_item')
+               number.classList.add('number')
+               img.classList.add('img')
+               user.classList.add('user')
+               name.classList.add('name')
+               author.classList.add('author')
+               love.classList.add('love')
+               time.classList.add('time')
+               menu.classList.add('menu')
+
+               img.id = item2._id
+               number.innerText = item2._id
+               img.src = `./static/picture/${item2.img}.jpg`
+               name.innerText = item2.title
+               author.innerText = item2.author
+               time.innerText = item2.times
+               menu_img.src = `./static/Icons/menu.svg`
+               // if else 
+               item2.isLiked ? love_img.src = `./static/Icons/love-blue.svg` : love_img.src = `./static/Icons/love-white.svg`
+               menu.append(menu_img)
+               love.append(love_img)
+               user.append(name, author)
+               main_item.append(number, img, user, love, time, menu)
+               reloadPlaylist.append(main_item)
+               // onclick
+               love_img.onclick = () => {
+                  btnLove(item2._id)
+               }
+               menu_img.onclick = (event) => {
+                  btnMenu(item2._id, event)
+               }
+               img.onclick = () => {
+                  imgPlaylistPlay(item.music.indexOf(item2), item2._id)
+               }
+            }
+         } else {
+            reloadPlaylist.innerText = 'please add music'
+         }
+         playlist.append(title, reloadPlaylist)
+      }
+      main_playlistHtml.append(playlist)
+      main_inner.append(main_playlistHtml)
+   }
+}
+
 let modalAddBox = document.querySelector('.modal-add-box')
+let modalAddName = document.querySelector('#playlist-name')
+let modalAddForId = document.querySelector('.modal-add')
 let inputModal = document.querySelector('.input-modal')
 let modalBtn = document.querySelector('.modal-btn')
 // modal add 
@@ -450,29 +542,38 @@ const modalAddFunc = (arr) => {
       itemElem.classList.add('item')
       name.classList.add('name')
       songsLength.classList.add('songsLength')
-
       name.innerText = item.title
       songsLength.innerText = item.music.length + ' songs'
 
       itemElem.append(name, songsLength)
       modalAddBox.append(itemElem)
+
+      itemElem.onclick = () => {
+         let find = music.filter(item => item._id == modalAddForId.id)[0]
+         let findTitle = playlists.filter(item => item.title == name.innerText)[0]
+         findTitle.music.unshift(find)
+         songsLength.innerText = item.music.length + ' songs'
+      }
    }
 }
 
-modalBtn.onclick = () => {
-   if (inputModal.value.length >= 3) {
-      playlists.push({
-         title: inputModal.value,
-         music: [],
-         _id: playlists.length
-      })
-      inputModal.value = ''
-   }
+const modalBtnFunc = () => {
+   modalBtn.onclick = () => {
+      if (inputModal.value.length >= 3) {
+         playlists.push({
+            title: inputModal.value,
+            music: [],
+            _id: playlists.length
+         })
+         inputModal.value = ''
+      }
 
-   addListFunc(playlists)
-   modalAddFunc(playlists)
+      addListFunc(playlists)
+      modalAddFunc(playlists)
+   }
 }
 
+modalBtnFunc()
 
 setTimeout(() => {
    reloadRandomFunc(music)
@@ -481,6 +582,7 @@ setTimeout(() => {
    asideReloadFunc(likedArr)
    modalAddFunc(playlists)
    addListFunc(playlists)
+   introCarusel(carusel)
 }, 500)
 
 // search 
@@ -708,88 +810,201 @@ audioSrc.addEventListener('ended', () => {
 // playlist page
 let playlist = document.querySelector('#playlist')
 let homepage = document.querySelector('#homepage')
+let settings = document.querySelector('#settings')
 let intro = document.querySelector('.intro')
 let main_homepage = document.querySelector('.main_homepage')
 let main_playlist = document.querySelector('.main_playlist')
 let reloadPlaylist = document.querySelector('.reloadPlaylist')
+let menu_setting = document.querySelector('.menu_setting')
 
 homepage.onclick = () => {
+   document.title = 'Homepage'
+   main_playlistHtml.style.display = `none`
    main_homepage.classList.remove('active')
    playlist.classList.remove('active')
    intro.classList.remove('active')
    main_playlist.classList.remove('active')
+   menu_setting.classList.remove('active')
 }
 
 playlist.onclick = () => {
+   document.title = 'Playlists'
+   main_playlistHtml.style.display = `none`
    main_playlist.classList.add('active')
    main_homepage.classList.add('active')
    intro.classList.add('active')
+   menu_setting.classList.remove('active')
    reloadPlalistFunc(playlists)
+}
+
+settings.onclick = () => {
+   document.title = 'Settings'
+   main_playlistHtml.style.display = `none`
+   intro.classList.add('active')
+   menu_setting.classList.add('active')
+   main_playlist.classList.remove('active')
+   main_homepage.classList.add('active')
 }
 
 const reloadPlalistFunc = (arr) => {
    main_playlist.innerHTML = ''
+
+   if (arr.length <= 0) {
+      let btn = document.createElement('p')
+      btn.classList.add('playlist-modal-btn')
+      btn.innerText = 'please add playlist !'
+      main_playlist.append(btn)
+   }
 
    for (const item of arr) {
       let last = document.createElement('div')
       let title = document.createElement('div')
       let reloadPlaylist = document.createElement('div')
 
-      last.classList.add('random')
+      last.classList.add('last')
       title.classList.add('title')
       reloadPlaylist.classList.add('main_content', 'reloadPlaylist')
 
       title.innerText = item.title
 
-      for (const item2 of item.music) {
-         let main_item = document.createElement('div')
-         let number = document.createElement('p')
-         let img = document.createElement('img')
-         let user = document.createElement('div')
-         let name = document.createElement('p')
-         let author = document.createElement('p')
-         let love = document.createElement('div')
-         let love_img = document.createElement('img')
-         let time = document.createElement('div')
-         let menu = document.createElement('div')
-         let menu_img = document.createElement('img')
+      if (item.music.length > 0) {
+         for (const item2 of item.music) {
+            let main_item = document.createElement('div')
+            let number = document.createElement('p')
+            let img = document.createElement('img')
+            let user = document.createElement('div')
+            let name = document.createElement('p')
+            let author = document.createElement('p')
+            let love = document.createElement('div')
+            let love_img = document.createElement('img')
+            let time = document.createElement('div')
+            let menu = document.createElement('div')
+            let menu_img = document.createElement('img')
 
-         main_item.classList.add('main_item')
-         number.classList.add('number')
-         img.classList.add('img')
-         user.classList.add('user')
-         name.classList.add('name')
-         author.classList.add('author')
-         love.classList.add('love')
-         time.classList.add('time')
-         menu.classList.add('menu')
+            main_item.classList.add('main_item')
+            number.classList.add('number')
+            img.classList.add('img')
+            user.classList.add('user')
+            name.classList.add('name')
+            author.classList.add('author')
+            love.classList.add('love')
+            time.classList.add('time')
+            menu.classList.add('menu')
 
-         img.id = item2._id
-         number.innerText = item.music.indexOf(item2) + 1
-         img.src = `./static/picture/${item2.img}.jpg`
-         name.innerText = item2.title
-         author.innerText = item2.author
-         time.innerText = item2.times
-         menu_img.src = `./static/Icons/menu.svg`
-         // if else 
-         item2.isLiked ? love_img.src = `./static/Icons/love-blue.svg` : love_img.src = `./static/Icons/love-white.svg`
-         menu.append(menu_img)
-         love.append(love_img)
-         user.append(name, author)
-         main_item.append(number, img, user, love, time, menu)
-         reloadPlaylist.append(main_item)
-         // onclick
-         love_img.onclick = () => {
-            btnLove(item2._id)
+            img.id = item2._id
+            number.innerText = item2._id
+            img.src = `./static/picture/${item2.img}.jpg`
+            name.innerText = item2.title
+            author.innerText = item2.author
+            time.innerText = item2.times
+            menu_img.src = `./static/Icons/menu.svg`
+            // if else 
+            item2.isLiked ? love_img.src = `./static/Icons/love-blue.svg` : love_img.src = `./static/Icons/love-white.svg`
+            menu.append(menu_img)
+            love.append(love_img)
+            user.append(name, author)
+            main_item.append(number, img, user, love, time, menu)
+            reloadPlaylist.append(main_item)
+            // onclick
+            love_img.onclick = () => {
+               btnLove(item2._id)
+            }
+            menu_img.onclick = (event) => {
+               btnMenu(item2._id, event)
+            }
+            img.onclick = () => {
+               imgPlaylistPlay(item.music.indexOf(item2), item2._id)
+            }
          }
-         menu_img.onclick = (event) => {
-            btnMenu(item2._id, event)
-         }
-         img.onclick = () => {
-            imgPlaylistPlay(item.music.indexOf(item2), item2._id)
-         }
+      } else {
+         reloadPlaylist.innerText = `please add music`
       }
       last.append(title, reloadPlaylist)
       main_playlist.append(last)
    }
 }
+
+// settings 
+let name_input = document.querySelector('.name-input')
+let header_name = document.querySelector('.header_user h3')
+let header_status = document.querySelector('.header_user p')
+let settings_btn = document.querySelector('.settings_btn')
+let box_checkbox = document.querySelector('.box')
+let cicrle = document.querySelector('.cicrle')
+
+name_input.value = header_name.innerText
+
+settings_btn.onclick = () => {
+   header_name.innerText = name_input.value
+}
+
+box_checkbox.onclick = () => {
+   cicrle.classList.toggle('active')
+   if (cicrle.classList.contains('active')) {
+      body.style.background = `rgb(238,111,87)`
+      body.style.background = `linear-gradient(180deg, rgba(238,111,87,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%)`
+      header_status.innerText = 'Premium User'
+   } else {
+      body.style.background = `rgb(0, 48, 39)`;
+      body.style.background = `linear-gradient(180deg, rgba(0, 48, 39, 1) 0%, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 1) 100%)`
+      header_status.innerText = 'Free User'
+   }
+}
+
+// intro 
+let btn_prew = document.querySelector('.btn_prew')
+let btn_next = document.querySelector('.btn_next')
+let dogs = document.querySelector('.dogs')
+let introCaounter = 0
+
+let introCarusel = (arr) => {
+   let title = intro.querySelector('.title')
+   let subtitle = intro.querySelector('.subtitle')
+   let time = intro.querySelector('.time')
+   let intro_right = document.querySelector('.intro_right img')
+
+   title.innerText = arr[introCaounter].title
+   subtitle.innerText = arr[introCaounter].author
+   time.innerText = arr[introCaounter].times
+   intro_right.src = `./static/picture/${arr[introCaounter].img}.jpg`
+
+   dogs.innerHTML = ''
+   for (const item of arr) {
+      let div = document.createElement('div')
+
+      div.onclick = () => {
+         btnDogs(item._id)
+      }
+
+      dogs.append(div)
+   }
+}
+
+let btnDogs = (elemId) => {
+   introCaounter = elemId
+   introCarusel(carusel)
+}
+
+btn_prew.onclick = () => {
+   introCaounter--
+   if (introCaounter < 0) {
+      introCaounter = carusel.length - 1
+   }
+   introCarusel(carusel)
+}
+
+btn_next.onclick = () => {
+   introCaounter++
+   if (introCaounter > carusel.length - 1) {
+      introCaounter = 0
+   }
+   introCarusel(carusel)
+}
+
+let caruselInterval = setInterval(() => {
+   introCaounter++
+   if (introCaounter > carusel.length - 1) {
+      introCaounter = 0
+   }
+   introCarusel(carusel)
+}, 2000)
