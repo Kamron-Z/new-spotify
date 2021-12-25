@@ -5,6 +5,7 @@ import {
 } from './data.js'
 
 let body = document.body
+let randomTitle = document.querySelector('#randomTitle')
 let reloadRandom = document.querySelector('.reloadRandom')
 let reloadLiked = document.querySelector('.reloadLiked')
 let reloadLast = document.querySelector('.reloadLast')
@@ -25,7 +26,7 @@ let likedArr;
 let lastArr = []
 
 likedArr = (music.filter(item => item.isLiked == true))
-
+randomTitle.innerText = music.length + ` random songs`
 // onclick mask 
 mask.onclick = () => {
    mask.classList.remove('active')
@@ -51,7 +52,6 @@ const btnLove = (elemId) => {
       let likedFind = likedArr.filter(item => item._id != find._id)
       likedArr = likedFind
    }
-
    if (main_playlist.classList.contains('active')) {
       reloadPlalistFunc(playlists)
       asideReloadFunc(likedArr)
@@ -61,7 +61,9 @@ const btnLove = (elemId) => {
       reloadLastFunc(lastArr)
       asideReloadFunc(likedArr)
    }
+
 }
+
 
 const btnMenu = (elemId, e) => {
    modalMenu.classList.add('active')
@@ -224,7 +226,7 @@ const audioMenu = () => {
 // reload
 const reloadRandomFunc = (arr) => {
    reloadRandom.innerHTML = ''
-
+   randomTitle.innerText = music.length + ` random songs`
    if (arr.length >= 0) {
       for (const item of arr) {
          let main_item = document.createElement('div')
@@ -492,7 +494,6 @@ const btnPlaylistHtml = (elemId) => {
                menu.classList.add('menu')
 
                img.id = item2._id
-               number.innerText = item2._id
                img.src = `./static/picture/${item2.img}.jpg`
                name.innerText = item2.title
                author.innerText = item2.author
@@ -667,7 +668,7 @@ const searchReload = (arr) => {
 // player
 let player_userName = document.querySelector('.player_user .name')
 let player_userAuthor = document.querySelector('.player_user .author')
-let audioSrc = document.querySelector('#audioSrc')
+let audioSrc = document.querySelector('.audioSrc')
 let play = document.querySelector('.play')
 let next = document.querySelector('.next')
 let prew = document.querySelector('.prew')
@@ -689,9 +690,14 @@ player_userName.innerText = music[0].title
 player_userAuthor.innerText = music[0].author
 audioSrc.src = `./static/audio/${music[0].title_org}.mp3`
 
+if (audioSrc.id == '') {
+   play.setAttribute('disabled', 'disabled')
+}
+
 play.onclick = () => {
    let checkActive = play.classList.contains('active')
    if (checkActive) {
+
       pauseFunc()
    } else {
       playFunc()
@@ -706,6 +712,7 @@ prewLast.onclick = () => prewLastFunc()
 nextLast.onclick = () => nextLastFunc()
 
 const playFunc = () => {
+   play.removeAttribute('disabled')
    audioSrc.play()
    play.classList.add('active')
    play.querySelector('.play_src').src = `./static/Icons/pause.svg`
@@ -861,7 +868,7 @@ const reloadPlalistFunc = (arr) => {
       let title = document.createElement('div')
       let reloadPlaylist = document.createElement('div')
 
-      last.classList.add('last')
+      last.classList.add('playlist')
       title.classList.add('title')
       reloadPlaylist.classList.add('main_content', 'reloadPlaylist')
 
@@ -892,7 +899,7 @@ const reloadPlalistFunc = (arr) => {
             menu.classList.add('menu')
 
             img.id = item2._id
-            number.innerText = item2._id
+
             img.src = `./static/picture/${item2.img}.jpg`
             name.innerText = item2.title
             author.innerText = item2.author
@@ -975,7 +982,6 @@ let introCarusel = (arr) => {
       div.onclick = () => {
          btnDogs(item._id)
       }
-
       dogs.append(div)
    }
 }
@@ -1000,11 +1006,3 @@ btn_next.onclick = () => {
    }
    introCarusel(carusel)
 }
-
-let caruselInterval = setInterval(() => {
-   introCaounter++
-   if (introCaounter > carusel.length - 1) {
-      introCaounter = 0
-   }
-   introCarusel(carusel)
-}, 2000)

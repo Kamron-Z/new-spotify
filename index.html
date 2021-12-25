@@ -28,7 +28,7 @@
          <p class="author">Starboy</p>
       </div>
       <div class="audio">
-         <audio id="audioSrc" src="#"></audio>
+         <audio class="audioSrc" src="#"></audio>
          <div class="audio-rigth">
             <div class="play-btn">
                <div class="player_user">
@@ -38,9 +38,9 @@
                <div class="audio_menu modal-player-menu">
                   <img src="./static/Icons/menu.svg">
                </div>
-               <div class="replay">
+               <!-- <div class="replay">
                   <img src="./static/Icons/repeat.svg">
-               </div>
+               </div> -->
                <div class="prew">
                   <img src="./static/Icons/track-next.svg">
                </div>
@@ -50,9 +50,9 @@
                <div class="prewLast">
                   <img src="./static/Icons/track-next.svg">
                </div>
-               <div class="play">
+               <button class="play">
                   <img class="play_src" src="./static/Icons/play.svg">
-               </div>
+               </button>
                <div class="next">
                   <img src="./static/Icons/track-prev.svg">
                </div>
@@ -62,9 +62,9 @@
                <div class="nextLast">
                   <img src="./static/Icons/track-prev.svg">
                </div>
-               <div class="any">
+               <!-- <div class="any">
                   <img src="./static/Icons/random.svg">
-               </div>
+               </div> -->
 
             </div>
             <div class="play-bar">
@@ -203,7 +203,7 @@
                <div class="main_homepage">
                   <!-- random -->
                   <div class="random">
-                     <div class="title">10 random songs</div>
+                     <div id="randomTitle" class="title"></div>
                      <div class="main_content reloadRandom">
                      </div>
                   </div>
