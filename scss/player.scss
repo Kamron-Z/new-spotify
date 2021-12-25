@@ -1,0 +1,242 @@
+.player {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   z-index: 200;
+   width: 100%;
+   background: #000;
+   padding: 25px 40px;
+   display: flex;
+   align-items: center;
+
+   &_user {
+      width: 20%;
+      font-size: 18px;
+
+      & .name {
+         margin-bottom: 5px;
+      }
+
+      & .author {
+         font-size: 14px;
+         color: #8E9AA7;
+      }
+   }
+}
+
+.audio {
+   width: 80%;
+
+   &-play {
+      width: 50%;
+      margin: 0 auto;
+   }
+}
+
+
+.play-btn {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   max-width: 380px;
+   width: 100%;
+   margin: 0 auto;
+
+   & .player_user {
+      display: none;
+   }
+
+   & .audio_menu {
+      display: none;
+   }
+
+   div {
+      cursor: pointer;
+
+   }
+
+   .play {
+      background: #8E9AA7;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .next {
+      &.active {
+         display: none;
+      }
+   }
+
+   .prew {
+      &.active {
+         display: none;
+      }
+   }
+}
+
+.play-bar {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   max-width: 600px;
+   width: 100%;
+   margin: 0 auto;
+   margin-top: 20px;
+}
+
+.progress-container {
+   width: 500px;
+   height: 10px;
+   border: 1px solid #8E9AA7;
+   border-radius: 8px;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+
+   .progress {
+      width: 0;
+      height: 7px;
+      background: #00ECBE;
+   }
+}
+
+@media (max-width : 650px) {
+   .player {
+      padding: 15px;
+
+      &_user {
+         display: none;
+      }
+   }
+
+   .audio {
+      width: 100%;
+      cursor: default;
+   }
+
+   
+
+   .play-btn {
+
+      & .audio_menu {
+         width: 30px;
+         height: 30px;
+         margin: 0 10px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+
+         img {
+            transform: rotate(90deg);
+         }
+      }
+   }
+
+   .play-btn {
+      & .replay {
+         display: none;
+      }
+
+      & .prew {
+         display: none;
+      }
+
+      & .next {
+         display: none;
+      }
+
+      & .any {
+         display: none;
+      }
+
+      & .nextLiked {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .prewLiked {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .prewLast {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .nextLast {
+         display: none;
+
+         &.active {
+            display: none;
+         }
+      }
+
+      & .player_user {
+         display: block;
+         width: 100%;
+      }
+   }
+}
+
+
+.played {
+   font-size: 16px;
+   color: #fff;
+   width: 100px;
+   text-align: start;
+}
+
+.timesong {
+   font-size: 16px;
+   color: #fff;
+   width: 100px;
+   text-align: end;
+}
+
+.nextLiked {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.prewLiked {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.prewLast {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.nextLast {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}

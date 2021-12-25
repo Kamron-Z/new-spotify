@@ -1,12 +1,40 @@
-export let playlists = [{
+let playlists = [{
    title: 'lisa',
-   music: []
+   music: [],
+}, ]
+
+let carusel = [{
+   title: 'Младшая сестра',
+   author: 'дора',
+   title_org: 'МладшаяСестра',
+   img: 'doradura',
+
+   isLiked: false,
 }, {
-   title: 'drake',
-   music: []
+   title: 'Втюрилась',
+   author: 'дора',
+   title_org: 'Втюрилась',
+   img: 'vturilas',
+
+   isLiked: false,
+}, {
+   title: 'MONEY',
+   author: 'LISA',
+   title_org: 'MONEY',
+   img: 'money',
+
+   isLiked: false,
+}, {
+   title: 'bad guy',
+   title_org: 'bad-guy',
+   author: 'BillieEilish',
+   img: 'badGuy',
+
+   length: Number,
+   isLiked: false,
 }]
 
-export let music = [
+let music = [
    // {
    //     title: String,
    //     author: String,
@@ -21,7 +49,7 @@ export let music = [
       img: 'lovely',
 
       length: Number,
-      isLiked: true,
+      isLiked: false,
    },
    {
       title: 'bad guy',
@@ -30,7 +58,7 @@ export let music = [
       img: 'badGuy',
 
       length: Number,
-      isLiked: true,
+      isLiked: false,
    },
    {
       title: 'Six Feet Under',
@@ -39,7 +67,7 @@ export let music = [
       img: 'six',
 
       length: Number,
-      isLiked: true,
+      isLiked: false,
    },
    {
       title: 'Сан Ларан',
@@ -141,3 +169,56 @@ export let music = [
       isLiked: false,
    },
 ]
+
+music.map(item => {
+   item._id = music.indexOf(item)
+   return item
+})
+
+playlists.map(item => {
+   item._id = playlists.indexOf(item)
+   return item
+})
+
+carusel.map(item => {
+   item._id = carusel.indexOf(item)
+   return item
+})
+
+for (let item of music) {
+   let audio = document.createElement('audio')
+
+   audio.src = `./static/audio/${item.title_org}.mp3`
+
+   audio.addEventListener("loadeddata", function () {
+      // audio.duration ? console.log(audio.duration) : console.log('NO FILE!')
+      let minut = Math.floor(audio.duration / 60)
+      let sec = Math.floor(audio.duration % 60)
+      if (sec < 10) {
+         sec = `0${sec}`;
+      }
+      item.times = `${minut}:${sec}`
+   });
+}
+
+for (let item of carusel) {
+   let audio = document.createElement('audio')
+
+   audio.src = `./static/audio/${item.title_org}.mp3`
+
+   audio.addEventListener("loadeddata", function () {
+      // audio.duration ? console.log(audio.duration) : console.log('NO FILE!')
+      let minut = Math.floor(audio.duration / 60)
+      let sec = Math.floor(audio.duration % 60)
+      if (sec < 10) {
+         sec = `0${sec}`;
+      }
+      item.times = `${minut}:${sec}`
+   });
+}
+
+export {
+   music,
+   playlists,
+   carusel
+}

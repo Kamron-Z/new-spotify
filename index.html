@@ -3,11 +3,80 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Homepage</title>
+   <link rel="shortcut icon" href="./static/Icons/logo.svg" type="image/x-icon">
    <link rel="stylesheet" href="./static/css/style.css">
 </head>
 
 <body>
+   <div class="mask"></div>
+   <div class="modal-add">
+      <img class="cancel" src="./static/Icons/close.svg">
+      <div class="title">Add to playlist</div>
+      <div class="modal-add-box">
+      </div>
+      <input type="text" class="input-modal" placeholder="Name of playlist">
+      <button class="modal-btn">Save</button>
+   </div>
+   <div class="modal-menu">
+      <div class="menu-item like"></div>
+      <div class="menu-item add">add to playlist</div>
+      <div class="menu-item lister">listen now</div>
+   </div>
+   <div class="player">
+      <div class="player_user">
+         <p class="name">The Weeknd</p>
+         <p class="author">Starboy</p>
+      </div>
+      <div class="audio">
+         <audio class="audioSrc" src="#"></audio>
+         <div class="audio-rigth">
+            <div class="play-btn">
+               <div class="player_user">
+                  <p class="name">The Weeknd</p>
+                  <p class="author">Starboy</p>
+               </div>
+               <div class="audio_menu modal-player-menu">
+                  <img src="./static/Icons/menu.svg">
+               </div>
+               <!-- <div class="replay">
+                  <img src="./static/Icons/repeat.svg">
+               </div> -->
+               <div class="prew">
+                  <img src="./static/Icons/track-next.svg">
+               </div>
+               <div class="prewLiked">
+                  <img src="./static/Icons/track-next.svg">
+               </div>
+               <div class="prewLast">
+                  <img src="./static/Icons/track-next.svg">
+               </div>
+               <button class="play">
+                  <img class="play_src" src="./static/Icons/play.svg">
+               </button>
+               <div class="next">
+                  <img src="./static/Icons/track-prev.svg">
+               </div>
+               <div class="nextLiked">
+                  <img src="./static/Icons/track-prev.svg">
+               </div>
+               <div class="nextLast">
+                  <img src="./static/Icons/track-prev.svg">
+               </div>
+               <!-- <div class="any">
+                  <img src="./static/Icons/random.svg">
+               </div> -->
 
+            </div>
+            <div class="play-bar">
+               <div class="played">0:00min</div>
+               <div class="progress-container">
+                  <div class="progress"></div>
+               </div>
+               <div class="timesong">0:00min</div>
+            </div>
+         </div>
+      </div>
+   </div>
    <!-- wrapper -->
    <div class="wrapper">
       <aside class="aside">
@@ -19,13 +88,13 @@
             <div class="aside_nav">
                <div class="title">Navigation</div>
                <div class="links">
-                  <div class="active">
+                  <div id="homepage">
                      <span>Homepage</span>
                   </div>
-                  <div>
+                  <div id="playlist">
                      <span>Playlists</span>
                   </div>
-                  <div>
+                  <div id="settings">
                      <span>Settings</span>
                   </div>
                </div>
@@ -34,7 +103,7 @@
             <!-- nav 2 -->
             <div class="aside_nav">
                <div class="title">playlists</div>
-               <div class="links">
+               <div class="links add-list">
                   <div>
                      <span>Liked songs</span>
                   </div>
@@ -43,10 +112,10 @@
                <!-- nav 3 -->
                <div class="aside_nav">
                   <div class="title">liked songs</div>
-                  <div class="links">
+                  <div class="links likedBox">
                      <div>
-                        <span>STAY</span>
-                        <span>3:53</span>
+                        <span>Name</span>
+                        <span>0:00</span>
                      </div>
                   </div>
                   <!-- /nav 3 -->
@@ -59,7 +128,9 @@
             <div class="header_inner">
                <div class="header_search">
                   <img src="./static/Icons/search.svg">
-                  <input type="text" placeholder="Search by name and artist">
+                  <input id="search" type="text" placeholder="Search by name and artist">
+                  <div class="search_box">
+                  </div>
                </div>
                <div class="header_user">
                   <h3>Alex Adams</h3>
@@ -89,6 +160,7 @@
          <!-- /mobile version -->
          <main class="main">
             <div class="main_inner">
+               <!-- intro  -->
                <div class="intro">
                   <div class="intro_left">
                      <p class="title">Selena Gomez</p>
@@ -113,7 +185,7 @@
                      </div>
                   </div>
                   <div class="intro_right">
-                     <img src="./static/picture/money.jpg" alt="">
+                     <img src="" alt="">
                      <div class="carucel hidden">
                         <div class="intro_carucel">
                            <button class="btn btn_prew">
@@ -124,14 +196,54 @@
                            </button>
                         </div>
                         <!-- dogs -->
-                        <div class="dogs">
-                           <div></div>
-                           <div></div>
-                           <div></div>
-                        </div>
+                        <div class="dogs"></div>
                      </div>
                   </div>
                </div>
+               <div class="main_homepage">
+                  <!-- random -->
+                  <div class="random">
+                     <div id="randomTitle" class="title"></div>
+                     <div class="main_content reloadRandom">
+                     </div>
+                  </div>
+                  <!-- /random -->
+                  <!-- liked -->
+                  <div class="liked">
+                     <div class="title">liked tracks</div>
+                     <div class="main_content reloadLiked">
+                     </div>
+                  </div>
+                  <!-- /liked -->
+                  <div class="last">
+                     <div class="title">recently listened</div>
+                     <div class="main_content reloadLast">
+                     </div>
+                  </div>
+               </div>
+               <div class="main_homepage main_playlist">
+                  <div class="last">
+                     <div class="title"></div>
+                     <div class="main_content reloadPlaylist"></div>
+                  </div>
+               </div>
+               <div class="main_homepage menu_setting">
+                  <div class="setting">
+                     <div class="title">settings</div>
+                     <p class="input_name">Your Name</p>
+                     <input class="name-input" type="text">
+                     <div class="input_name">Free or Premium</div>
+                     <div class="status-edit">
+                        <div class="box">
+                           <div class="cicrle"></div>
+                        </div>
+                        <p>Premium User</p>
+                     </div>
+                     <p class="no-settings">No more settings <img src="./static/Icons/cry.svg"></p>
+                     <button class="settings_btn">Save</button>
+                  </div>
+               </div>
+
             </div>
          </main>
       </div>

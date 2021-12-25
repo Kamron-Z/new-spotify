@@ -1,0 +1,357 @@
+.main {
+   width: 100%;
+
+   &_homepage {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      grid-gap: 15px;
+      justify-content: center;
+      background: #191C21;
+      padding: 50px;
+      margin-top: 50px;
+
+      &.active {
+         display: none;
+      }
+
+      & .title {
+         font-size: 16px;
+         color: #8E9AA7;
+         text-transform: uppercase;
+         margin-bottom: 20px;
+      }
+
+
+      & .random {
+         width: 33%;
+      }
+
+      & .liked {
+         width: 33%;
+      }
+
+      & .last {
+         width: 33%;
+      }
+   }
+
+
+   &_item {
+      display: flex;
+      align-items: center;
+      transition: .3s all;
+      margin: 5px 0;
+
+      &:hover {
+         backdrop-filter: blur(2px);
+         backdrop-filter: brightness(60%);
+      }
+
+      &:hover .love {
+         opacity: 1;
+      }
+
+      &:hover .menu {
+         opacity: 1;
+      }
+
+      & .number {
+         font-size: 16px;
+         color: #fff;
+         width: 50px;
+         text-align: end;
+         margin-right: 16px;
+      }
+
+      & .img {
+         width: 44px;
+         height: 44px;
+         object-fit: contain;
+         cursor: pointer;
+         margin-right: 16px;
+      }
+
+      & .user {
+         width: 100px;
+         margin-right: 16px;
+
+         & .name {
+            font-size: 16px;
+            color: #00ECBE;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 5px;
+         }
+
+         & .author {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+            color: #fff;
+         }
+      }
+
+      & .love {
+         width: 34px;
+         height: 44px;
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         opacity: 0;
+         transition: .3s all;
+
+         img {
+            width: 100%;
+            height: 100%;
+            object-fit: scale-down;
+         }
+      }
+
+      & .time {
+
+         font-size: 16px;
+         color: #8E9AA7;
+         margin: 0 5px;
+      }
+
+      & .menu {
+         width: 34px;
+         height: 44px;
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         opacity: 0;
+         transition: .3s all;
+      }
+   }
+}
+
+.main_playlist {
+   width: 100%;
+   max-width: 100%;
+   display: none;
+   grid-template-columns: 1fr 1fr;
+   grid-gap: 15px;
+   justify-content: center;
+   background: #191C21;
+   padding: 50px;
+   margin-top: 50px;
+
+   &.active {
+      display: grid;
+   }
+}
+
+
+@media (max-width: 1200px) {
+   .main_homepage {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      & .random {
+         width: 100%;
+      }
+
+      & .liked {
+         width: 100%;
+      }
+
+      & .last {
+         width: 100%;
+      }
+   }
+
+}
+
+@media (max-width: 1000px) {
+   .main_homepage {
+      grid-template-columns: repeat(1, 1fr);
+
+      & .random {
+         text-align: center;
+      }
+
+      & .liked {
+         text-align: center;
+      }
+
+      & .last {
+         text-align: center;
+      }
+   }
+
+   .main_content {
+      width: 50%;
+      margin: 0 auto;
+   }
+}
+
+@media (max-width: 850px) {
+   .main {
+      width: 100%;
+   }
+}
+
+@media (max-width: 700px) {
+   .main_content {
+      width: auto;
+      margin: 0;
+   }
+
+   .main_homepage {
+
+      & .random {
+         text-align: start;
+      }
+
+      & .liked {
+         text-align: start;
+      }
+
+      & .last {
+         text-align: start;
+      }
+   }
+}
+
+@media (max-width: 500px) {
+   .main_inner {
+      padding-top: 0;
+   }
+
+   .main_homepage {
+      padding: 15px;
+      margin-top: 25px
+   }
+
+   .main_item {
+      & .menu {
+         display: none;
+      }
+
+      & .love {
+         display: none;
+      }
+   }
+}
+
+// main_playlist
+// settings 
+
+.menu_setting {
+   display: none;
+
+   &.active {
+      display: block;
+   }
+}
+
+.setting {
+   width: 50%;
+
+   & .title {
+      font-size: 46px;
+      margin-bottom: 50px;
+      color: #fff;
+   }
+
+   & .input_name {
+      font-size: 14px;
+      color: #8E9AA7;
+      margin-bottom: 10px;
+   }
+
+   & .name-input {
+      width: 100%;
+      padding: 15px 25px;
+      color: #fff;
+      font-size: 20px;
+      background: none;
+      backdrop-filter: blur(2px);
+      backdrop-filter: brightness(60%);
+      margin-bottom: 36px;
+
+      &::placeholder {
+         color: #fff;
+         font-size: 20px;
+      }
+   }
+
+   & .status-edit {
+      display: flex;
+      align-items: center;
+      margin-bottom: 35px;
+
+      & .box {
+         position: relative;
+         width: 38px;
+         height: 20px;
+         background: #fff;
+         border-radius: 12px;
+         margin-right: 10px;
+         cursor: pointer;
+
+         & .cicrle {
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            z-index: 10;
+            width: 18px;
+            height: 18px;
+            background: #00ECBE;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            transition: .3s all;
+
+            &.active {
+               left: 18px;
+               background: #EE6F57;
+            }
+         }
+      }
+
+      p {
+         font-size: 16px;
+         color: #fff;
+      }
+   }
+
+   & .no-settings {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      img {
+         margin-left: 10px;
+      }
+   }
+
+
+   & .settings_btn {
+      width: 70%;
+      background: #00ECBE;
+      padding: 15px;
+      font-size: 16px;
+      color: #000;
+      border-radius: 8px;
+      transition: .3s all;
+      border: none;
+
+      &:hover {
+         background: #000;
+         color: #00ECBE;
+      }
+   }
+}
+
+.main_playlistHtml {
+   display: none;
+}

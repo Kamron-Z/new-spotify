@@ -1,0 +1,27 @@
+.main {
+   width: 100%;
+   width: 80%;
+   float: right;
+   margin-top: 100px;
+
+   &_inner {
+      padding: 35px 0 130px;
+   }
+
+}
+
+@media (max-width: 850px) {
+   .main {
+      width: 100%;
+   }
+}
+
+@media (max-width: 500px) {
+   .main_inner {
+      padding-top: 0;
+   }
+}
+
+.hidden {
+   display: none;
+}
